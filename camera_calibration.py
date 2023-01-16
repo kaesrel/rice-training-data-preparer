@@ -15,7 +15,7 @@ imgpoints = dict()
 
 not_found_corner = dict()
 
-# for cam in os.listdir(f"{config.folder['input_by_cameras']}"):
+# for cam in os.listdir(f"{config.folder['input']}"):
 #     objpoints[cam] = []
 #     imgpoints[cam] = []
 #     not_found_corner[cam] = []
@@ -29,12 +29,12 @@ objp[0,:,:2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 # print(len(imgs_to_calibrate))
 # print(imgs_to_calibrate)
 
-for cam in os.listdir(f"{config.folder['input_by_cameras']}"):
+for cam in os.listdir(f"{config.folder['input']}"):
     objpoints[cam] = []
     imgpoints[cam] = []
     not_found_corner[cam] = []
 
-    images = glob.glob(f"{config.folder['input_by_cameras']}/{cam}/**/*.jpg")
+    images = glob.glob(f"{config.folder['input']}/{cam}/**/*.jpg")
 
     random.seed(config.random_seed)
     random.shuffle(images, random.random)
@@ -66,7 +66,7 @@ for cam in os.listdir(f"{config.folder['input_by_cameras']}"):
             not_found_corner[cam].append(fname)
 
 
-for cam in os.listdir(f"{config.folder['input_by_cameras']}"):
+for cam in os.listdir(f"{config.folder['input']}"):
     imgpoints_array = np.array(imgpoints[cam])
     objpoints_array = np.array(objpoints[cam])
     # np.savetxt("imgpoints.txt", imgpoints_array)
@@ -74,12 +74,12 @@ for cam in os.listdir(f"{config.folder['input_by_cameras']}"):
 
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints[cam], imgpoints[cam], gray.shape[::-1],None,None)
 
-    with open(f"{config.folder['input_by_cameras']}/{cam}/camera_matrix.npy", "wb") as f:
+    with open(f"{config.folder['input']}/{cam}/camera_matrix.npy", "wb") as f:
         np.save(f, mtx)
         np.save(f, dist)
    
 
-    # with open(f"{config.folder['input_by_cameras']}/{cam}/camera_matrix.npy", "rb") as f:
+    # with open(f"{config.folder['input']}/{cam}/camera_matrix.npy", "rb") as f:
     #     my_mtx = np.load(f)
     #     my_dist = np.load(f)
 

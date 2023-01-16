@@ -16,23 +16,23 @@ class Annotator:
         x2 = state.rect_coordinates[1][0]
         y2 = state.rect_coordinates[1][1]
         
-        x_center = int ((x2 - x1) / 2) / w
-        y_center = int ((y2 - y1) / 2) / h
+        x_center = int ((x2 + x1) / 2) / w
+        y_center = int ((y2 + y1) / 2) / h
  
         # box_center = np.array([x_centre_norm, y_centre_norm])
         
         box_width = (x2  - x1) / w
-        box_height = (x2  - x1) / h
+        box_height = (y2  - y1) / h
 
         return x_center, y_center, box_width, box_height
 
 
-    def annotate(self, fname):
-        img = cv2.imread(fname)
-        imgname = fname.split('/')[-1]
-        class_num = config.class_dict[fname.split('/')[-2]]
-        # class_num = 0
-        img_id = imgname.split('.')[0]
+    def annotate(self, img):
+        # img = cv2.imread(fname)
+        imgname = state.fname
+        # class_num = config.class_dict[fname.split('/')[-2]]
+        class_num = config.class_dict[state.cname]
+        img_id = imgname.split('/')[-1].split('.')[0]
         h,w = img.shape[:2]
         xc, yc, bw, bh = self.convert_coordinate(w,h)
 
@@ -66,6 +66,7 @@ class Annotator:
         object_data.write(f"valid = validation.txt\n")
         object_data.write(f"test = test.txt\n")
         object_data.write(f"names = obj.names\n")
+        object_data.write(f"backup = backup/\n")
 
         # print(sorted_class)
 
