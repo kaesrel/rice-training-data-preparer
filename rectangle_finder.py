@@ -31,11 +31,18 @@ class RectangleFinder:
                 square_size = max(config.CHECKERBOARD) + 1
                 len_ratio = (w+h)/(state.dt * square_size * 2)
                 if abs(square_ratio - 1.0) <= eps1 and abs(len_ratio - 1.0) <= eps2:
-                    pt1 = (x, y) + state.offset
-                    pt2 = (x+w, y+h) + state.offset
+                    dw = round(w*config.tight_factor/2)
+                    dh = round(h*config.tight_factor/2)
+                    # dw = 16
+                    # dh = 16
+                    pt1 = (x, y) + state.offset + (dw, dh)
+                    pt2 = (x+w, y+h) + state.offset - (dw, dh)
+                    print(f"Points are: {pt1} {pt2}")
+                    print(f"dw dh are: {dw} {dh}")
                     if config.DEBUG_RECT:
                         cv2.rectangle(img, pt1, pt2, (0, 255, 0), 2)
-                        cv2.putText(img, 'Square', (x1,y1) + state.offset, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+                        # cv2.putText(img, 'Square', (x1,y1) + state.offset, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+                        cv2.putText(img, 'rice_100', (x,y) + state.offset, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
                     state.rect_coordinates = np.array([pt1,pt2])
 
                     return True

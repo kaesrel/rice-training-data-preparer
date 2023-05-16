@@ -15,13 +15,6 @@
 * Application Development
 
 
-## Process
-### Description
-### Input
-### Output
-### Task
-
-
 ## Calibration
 ### Description
 Calibrate the images to make it consistent among all cameras and most image angles.
@@ -43,8 +36,6 @@ Calibrate the images to make it consistent among all cameras and most image angl
 │   │   ├── *.png
 ...
 ```
-### Tasks
-TBA
 
 
 ## Semi-Auto Tagging
@@ -65,8 +56,6 @@ Tag image class automatically via YOLO.
 │   │   │   ├── *.txt  # (tags/labels in YOLO format)
 ...
 ```
-### Tasks
-TBA
 
 
 ## Model Training
@@ -87,8 +76,6 @@ Train/test/validate params
 ### Output
 *.weights
 
-### Tasks
-TBA
 
 
 ## Application Development
@@ -114,6 +101,3 @@ The app must be able to do camera callibration for each camera/device.
 2. An undistorted Image
 3. A predicted image and results
 4. Other info for Debugging purpose (statistics, time)
-
-### Tasks
-TBA

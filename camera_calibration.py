@@ -30,11 +30,14 @@ objp[0,:,:2] = np.mgrid[0:CHECKERBOARD[0], 0:CHECKERBOARD[1]].T.reshape(-1, 2)
 # print(imgs_to_calibrate)
 
 for cam in os.listdir(f"{config.folder['input']}"):
+    print(cam)
     objpoints[cam] = []
     imgpoints[cam] = []
     not_found_corner[cam] = []
 
     images = glob.glob(f"{config.folder['input']}/{cam}/**/*.jpg")
+
+
 
     random.seed(config.random_seed)
     random.shuffle(images, random.random)
@@ -53,6 +56,10 @@ for cam in os.listdir(f"{config.folder['input']}"):
         ret, corners = cv2.findChessboardCorners(gray, CHECKERBOARD, cv2.CALIB_CB_ADAPTIVE_THRESH+
             cv2.CALIB_CB_FAST_CHECK+cv2.CALIB_CB_NORMALIZE_IMAGE)
 
+        # if cam == "camera1":
+        #     print(cname)
+
+
         if ret == True:
 
             objpoints[cam].append(objp)
@@ -62,8 +69,13 @@ for cam in os.listdir(f"{config.folder['input']}"):
             
             imgpoints[cam].append(corners2)
             # Draw and display the corners
+            my_img = img.copy()
+            my_img = cv2.drawChessboardCorners(my_img, CHECKERBOARD, corners2,ret)
+            cv2.imwrite(f"chessboard_demo/{fname.split('/')[-1]}", my_img)
         else:
             not_found_corner[cam].append(fname)
+        
+
 
 
 for cam in os.listdir(f"{config.folder['input']}"):

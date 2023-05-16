@@ -68,13 +68,15 @@ for cam in cameras:
         if (not mtx is None) and (not dist is None):
             newcameramtx, dist_roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
             img = cv2.undistort(img, mtx, dist, None, newcameramtx)  # undistorted image
+            # cv2.imwrite(f"{output_folder}/undist/{fname.split('/')[-1]}", img)
             state.is_calibrated = True
 
-        is_warped, warped = warper.warp(img)
+        is_warped, warped = warper.warp(img) # perp trans
         roi = masker.get_roi(warped)
 
         try:
             mask = masker.mask(roi)
+            cv2.imwrite(f"laplacian_example.png", mask)
         except cv2.error:
             state.mask_errors.append(state.fname)
             i+=1
@@ -91,9 +93,12 @@ for cam in cameras:
         else:
             state.cannot_draw.append(state.fname)
 
+        # if i == 1:
+        #     break
+
         i+=1
 
-# sys.exit
+# sys.exit()
 
 print("====================================================")
 print("MASK ERRORS:")

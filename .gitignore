@@ -1,2 +1,25 @@
 *.jpg
+*.png
 *.txt
+*.ipynb
+
+# model weights
+*.weights
+*.conv.*
+
+camera_matrix.npy
+
+
+# other images
+chart*.png
+laplacian_example.png
+
+*.names
+*.data
+
+
+# other files
+*backup*/
+test*.py
+data
+__pycache__/
