@@ -1,11 +1,5 @@
 # Thai Rice Grading DNN
 
-## TODO:
-* Add description of the projects.
-* Add Development steps
-* Add Wiki
-
-
 
 # Process List:
 * Gather Images
